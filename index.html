@@ -218,7 +218,7 @@
       right: 0;
       bottom: 0;
       background: var(--white);
-      z-index: 150;
+      z-index: 90;
       padding: 100px 24px 40px;
       flex-direction: column;
       align-items: center;
@@ -1539,19 +1539,21 @@
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
+    const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+    const setMenuState = (isOpen) => {
+      menuToggle.classList.toggle('active', isOpen);
+      mobileMenu.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    };
 
     menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      setMenuState(!mobileMenu.classList.contains('active'));
     });
 
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
+        setMenuState(false);
       });
     });
 

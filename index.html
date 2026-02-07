@@ -202,6 +202,49 @@
       transition: all 0.3s;
     }
 
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--white);
+      z-index: 99;
+      padding: 100px 24px 40px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    .mobile-menu .btn-primary {
+      margin-top: 20px;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
     /* ============================================
        HERO
     ============================================ */
@@ -1061,6 +1104,15 @@
     </div>
   </header>
 
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="#leistungen" class="mobile-link">Leistungen</a>
+    <a href="#prozess" class="mobile-link">Ablauf</a>
+    <a href="#projekte" class="mobile-link">Projekte</a>
+    <a href="#kontakt" class="mobile-link">Kontakt</a>
+    <a href="tel:+41772616517" class="btn-primary">077 261 65 17</a>
+  </div>
+
   <!-- HERO -->
   <section class="hero">
     <div class="container">
@@ -1319,6 +1371,25 @@
       } else {
         header.classList.remove('scrolled');
       }
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
     });
 
     // Intersection Observer for animations

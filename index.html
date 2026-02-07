@@ -251,6 +251,57 @@
     }
 
     /* ============================================
+       REGIONAL HERO
+    ============================================ */
+    .regional-hero {
+      position: relative;
+      width: 100%;
+      height: 40vh;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .regional-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.35) 100%),
+        url('schaffhausen-hero.jpg');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transform-origin: center;
+      animation: regional-kenburns 25s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+
+    .regional-hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 0 24px;
+      max-width: 900px;
+    }
+
+    .regional-hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      text-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    @keyframes regional-kenburns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
+    /* ============================================
        HERO
     ============================================ */
     .hero {
@@ -1225,6 +1276,12 @@
       </div>
     </div>
   </header>
+
+  <section class="regional-hero" aria-label="Regionaler Hinweis Schaffhausen">
+    <div class="regional-hero-inner">
+      <h2 class="regional-hero-title">Ihr Partner aus dem Kanton Schaffhausen</h2>
+    </div>
+  </section>
 
   <!-- Mobile Menu -->
   <div class="mobile-menu">

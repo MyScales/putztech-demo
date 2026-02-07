@@ -24,8 +24,8 @@
       --gray-600: #6b6660;
       --gray-800: #3d3a36;
       --dark: #1a1816;
-      --accent: #2b7ab8;
-      --accent-dark: #1f5a8a;
+      --accent: #4a4a4a;
+      --accent-dark: #2f2f2f;
       
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-serif: 'Playfair Display', Georgia, serif;
@@ -130,11 +130,9 @@
     .logo-img {
       height: 48px;
       width: auto;
-      filter: brightness(0) invert(1);
-      background: transparent;
-      padding: 0;
-      border-radius: 0;
-      box-shadow: none;
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
     }
 
     .logo-text {
@@ -787,7 +785,7 @@
     .project-card {
       position: relative;
       aspect-ratio: 16/10;
-      background: linear-gradient(135deg, var(--light) 0%, var(--gray-100) 100%);
+      background: #e5e5e5;
       border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
@@ -840,8 +838,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      background: #e5e5e5;
+      color: var(--gray-600);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      border: 1px dashed #cfcfcf;
+    }
+
+    .project-placeholder span {
+      font-size: 0.95rem;
+    }
+
+    .project-placeholder .project-placeholder-sub {
+      font-size: 0.75rem;
       color: var(--gray-400);
-      font-weight: 500;
+      letter-spacing: 0.08em;
     }
 
     /* ============================================
@@ -1435,7 +1449,10 @@
       </div>
       <div class="projects-grid">
         <div class="project-card" data-animate data-animate-delay="1">
-          <div class="project-placeholder">Projekt 1</div>
+          <div class="project-placeholder">
+            <span>Ihr Projekt</span>
+            <span class="project-placeholder-sub">Platzhalter</span>
+          </div>
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Altbausanierung</h3>
@@ -1443,7 +1460,10 @@
           </div>
         </div>
         <div class="project-card" data-animate data-animate-delay="2">
-          <div class="project-placeholder">Projekt 2</div>
+          <div class="project-placeholder">
+            <span>Ihr Projekt</span>
+            <span class="project-placeholder-sub">Platzhalter</span>
+          </div>
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Neubau EFH</h3>
@@ -1451,7 +1471,10 @@
           </div>
         </div>
         <div class="project-card" data-animate data-animate-delay="3">
-          <div class="project-placeholder">Projekt 3</div>
+          <div class="project-placeholder">
+            <span>Ihr Projekt</span>
+            <span class="project-placeholder-sub">Platzhalter</span>
+          </div>
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Gewerberaum</h3>
@@ -1459,7 +1482,10 @@
           </div>
         </div>
         <div class="project-card" data-animate data-animate-delay="4">
-          <div class="project-placeholder">Projekt 4</div>
+          <div class="project-placeholder">
+            <span>Ihr Projekt</span>
+            <span class="project-placeholder-sub">Platzhalter</span>
+          </div>
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Stuckrestaurierung</h3>

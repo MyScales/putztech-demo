@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Putztech GmbH — Premium Stuck & Verputz in Schaffhausen</title>
+  <meta name="description" content="Putztech GmbH: Hochwertige Putzarbeiten, Stuck und Fassaden in Schaffhausen. Präzision, Materialkunde und saubere Ausführung für Privat und Gewerbe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #0f1216;
+      --bg-2: #14181d;
+      --bg-3: #0b0e12;
+      --surface: #161b22;
+      --dark: #1a1a1a;
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --text: #f4f7f4;
+      --muted: #b8c4bf;
+      --primary: #2b7ab8;
+      --primary-2: #6fb1e0;
+      --primary-3: #1f5d90;
+      --accent: var(--primary);
+      --accent-2: #d2b07a;
+      --accent-3: var(--primary-2);
+      --grid: rgba(255, 255, 255, 0.05);
+      --shadow: 0 30px 80px rgba(5, 10, 10, 0.55);
+      --radius-lg: 32px;
+      --radius-md: 20px;
+      --radius-sm: 12px;
+      --maxw: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(43, 122, 184, 0.2), transparent 70%),
+        radial-gradient(900px 500px at 90% 10%, rgba(111, 177, 224, 0.16), transparent 70%),
+        linear-gradient(160deg, var(--bg-3), var(--bg));
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      z-index: 1;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(10, 15, 15, 0.86), rgba(10, 15, 15, 0.4));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 6px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .logo img {
+      height: 46px;
+      width: auto;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(130deg, rgba(43, 122, 184, 0.35), rgba(111, 177, 224, 0.3));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-cta::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: translateX(-120%);
+      transition: transform 0.9s ease;
+    }
+
+    .nav-cta:hover::after {
+      transform: translateX(120%);
+    }
+
+    .hero {
+      position: relative;
+      padding: 110px 28px 70px;
+      z-index: 2;
+    }
+
+    .hero-grid {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 28px;
+    }
+
+    .hero-copy {
+      grid-column: span 7;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      font-size: clamp(2.6rem, 5vw, 4.4rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-copy p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
+      background: linear-gradient(140deg, var(--primary), var(--primary-2));
+      color: #07121b;
+      box-shadow: 0 18px 40px rgba(43, 122, 184, 0.32);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 25px 60px rgba(43, 122, 184, 0.4);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: none;
+    }
+
+    .hero-card {
+      grid-column: span 5;
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-image {
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 280px;
+      position: relative;
+      background: linear-gradient(140deg, rgba(20, 30, 30, 0.4), rgba(10, 14, 14, 0.9));
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+    }
+
+    .hero-image::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=80");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(0.85) contrast(1.05);
+      transform: scale(1.08);
+      mask-image: radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.65) 55%, rgba(0, 0, 0, 0.35) 100%);
+    }
+
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8, 10, 10, 0.2) 0%, rgba(8, 10, 10, 0.78) 70%, rgba(8, 10, 10, 0.95) 100%);
+    }
+
+    .hero-image-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 6px;
+    }
+
+    .hero-image-content strong {
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-image-content span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(10, 12, 12, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat h3 {
+      font-size: 1.4rem;
+      letter-spacing: 0.02em;
+    }
+
+    .stat p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .section {
+      padding: 80px 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      gap: 36px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .service-card {
+      padding: 26px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+      backdrop-filter: blur(16px);
+      transition: transform 0.4s ease, border 0.4s ease;
+      display: grid;
+      gap: 14px;
+      min-height: 230px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(43, 122, 184, 0.45);
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .service-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .project-card {
+      grid-column: span 4;
+      min-height: 260px;
+      border-radius: 26px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #0f1516;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(0.8) contrast(1.1);
+      transform: scale(1.06);
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 9, 9, 0.1) 0%, rgba(6, 9, 9, 0.7) 65%, rgba(6, 9, 9, 0.95) 100%);
+    }
+
+    .project-card:nth-child(1)::before {
+      background-image: url("https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .project-card:nth-child(2)::before {
+      background-image: url("https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .project-card:nth-child(3)::before {
+      background-image: url("https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .project-content {
+      position: relative;
+      z-index: 1;
+      padding: 22px;
+      display: grid;
+      gap: 8px;
+      height: 100%;
+      align-content: end;
+    }
+
+    .project-content h4 {
+      font-size: 1.2rem;
+    }
+
+    .project-content span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .process-card {
+      padding: 22px;
+      border-radius: var(--radius-md);
+      background: rgba(12, 16, 16, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      gap: 12px;
+    }
+
+    .process-card strong {
+      font-size: 1.1rem;
+    }
+
+    .process-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .testimonial {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .testimonial-card {
+      grid-column: span 7;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      gap: 16px;
+    }
+
+    .testimonial-card p {
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .testimonial-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .testimonial-panel {
+      grid-column: span 5;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, rgba(43, 122, 184, 0.25), rgba(12, 16, 16, 0.7));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      gap: 14px;
+    }
+
+    .testimonial-panel h3 {
+      font-size: 1.4rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .cta {
+      padding: 90px 28px 110px;
+    }
+
+    .cta-card {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(140deg, rgba(43, 122, 184, 0.22), rgba(31, 93, 144, 0.18));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(210, 176, 122, 0.25), transparent 60%),
+        radial-gradient(circle at 80% 0%, rgba(111, 177, 224, 0.22), transparent 55%);
+      opacity: 0.6;
+    }
+
+    .cta-content {
+      grid-column: span 7;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 14px;
+    }
+
+    .cta-content h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+    }
+
+    .cta-actions {
+      grid-column: span 5;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 14px;
+      justify-items: start;
+    }
+
+    footer {
+      padding: 40px 28px 60px;
+      color: var(--muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner strong {
+      color: var(--text);
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(180deg, var(--grid) 1px, transparent 1px);
+      background-size: 120px 120px;
+      mask-image: radial-gradient(circle at 20% 10%, black 0%, transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero-copy,
+      .hero-card {
+        grid-column: span 12;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .projects .project-card {
+        grid-column: span 6;
+      }
+
+      .process {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .testimonial-card,
+      .testimonial-panel {
+        grid-column: span 12;
+      }
+
+      .cta-content,
+      .cta-actions {
+        grid-column: span 12;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 80px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .projects .project-card {
+        grid-column: span 12;
+      }
+
+      .process {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-card {
+        padding: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="noise"></div>
+    <header>
+      <nav class="nav">
+        <div class="logo">
+          <div class="logo-mark">
+            <img src="logo-original.jpg" alt="Putztech GmbH Logo" />
+          </div>
+          <span class="sr-only">Putztech GmbH</span>
+        </div>
+        <div class="nav-links">
+          <a href="#leistungen">Leistungen</a>
+          <a href="#projekte">Projekte</a>
+          <a href="#prozess">Prozess</a>
+          <a href="#kontakt">Kontakt</a>
+        </div>
+        <a class="nav-cta" href="#kontakt">Erstgespräch buchen</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="grid-lines"></div>
+        <div class="hero-grid">
+          <div class="hero-copy" data-animate>
+            <div class="eyebrow">Schaffhausen · Premium Putz & Stuck</div>
+            <h1>Oberflächen, die Vertrauen schaffen — für anspruchsvolle Immobilien.</h1>
+            <p>
+              Putztech GmbH vereint Handwerk, Materialwissen und Projektführung auf Agentur-Niveau.
+              Von historischen Fassaden bis zu modernen Innenräumen liefern wir exakte Details, saubere Kanten
+              und langlebige Ergebnisse.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="#kontakt">Projekt anfragen</a>
+              <a class="btn secondary" href="#projekte">Referenzen ansehen</a>
+            </div>
+          </div>
+          <div class="hero-card" data-animate>
+            <div class="hero-image">
+              <div class="hero-image-content">
+                <strong>Ausführung ohne Kompromisse</strong>
+                <span>Innenputz · Fassaden · Stuck · Renovationen</span>
+              </div>
+            </div>
+            <div class="hero-stats">
+              <div class="stat">
+                <h3>Seit 2002</h3>
+                <p>Erfahrung in der Region</p>
+              </div>
+              <div class="stat">
+                <h3>4.9★</h3>
+                <p>Kundenzufriedenheit</p>
+              </div>
+              <div class="stat">
+                <h3>48h</h3>
+                <p>Antwortzeit auf Anfragen</p>
+              </div>
+              <div class="stat">
+                <h3>100%</h3>
+                <p>Saubere Übergabe</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="leistungen">
+        <div class="section-inner">
+          <div class="section-title">
+            <h2>Leistungen für höchste Ansprüche</h2>
+            <p>Jedes Objekt erhält eine präzise Materialstrategie — abgestimmt auf Klima, Nutzung und Architektur.</p>
+          </div>
+          <div class="services-grid">
+            <article class="service-card" data-animate>
+              <h3>Innenputz & Designoberflächen</h3>
+              <p>Feine Oberflächen, die Licht perfekt aufnehmen — von klassisch glatt bis mineralisch strukturiert.</p>
+              <div class="service-meta"><span>Farbkonzept</span><span>Materialberatung</span></div>
+            </article>
+            <article class="service-card" data-animate>
+              <h3>Fassaden & Wärmedämmung</h3>
+              <p>Wetterbeständige Fassaden mit klaren Linien, schützenden Details und nachhaltiger Dämmung.</p>
+              <div class="service-meta"><span>ETA-Systeme</span><span>Langzeitgarantie</span></div>
+            </article>
+            <article class="service-card" data-animate>
+              <h3>Stuck & Restaurierung</h3>
+              <p>Historische Substanz erhalten, neue Eleganz schaffen — für Altbau, Hotels und Villen.</p>
+              <div class="service-meta"><span>Manufaktur</span><span>Detailrekonstruktion</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projekte">
+        <div class="section-inner">
+          <div class="section-title">
+            <h2>Projekte mit Klarheit und Substanz</h2>
+            <p>Ausgewählte Arbeiten aus Schaffhausen und Umgebung — jedes Projekt dokumentiert vom ersten Muster bis zur Abnahme.</p>
+          </div>
+          <div class="projects">
+            <article class="project-card" data-animate>
+              <div class="project-content">
+                <h4>Altbauvilla, Rheinfallstrasse</h4>
+                <span>Fassade · Stuckprofilierung · Farbkonzept</span>
+              </div>
+            </article>
+            <article class="project-card" data-animate>
+              <div class="project-content">
+                <h4>Büroetage, Munotstrasse</h4>
+                <span>Innenputz · Akustikflächen · Projektleitung</span>
+              </div>
+            </article>
+            <article class="project-card" data-animate>
+              <div class="project-content">
+                <h4>Private Residenz, Beringen</h4>
+                <span>Designputz · Kalkglätte · Lichtführung</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="prozess">
+        <div class="section-inner">
+          <div class="section-title">
+            <h2>Ein Prozess, der Ruhe schafft</h2>
+            <p>Transparente Planung, saubere Baustellenführung und klare Kommunikation von Erstkontakt bis Übergabe.</p>
+          </div>
+          <div class="process">
+            <div class="process-card" data-animate>
+              <strong>01 · Analyse</strong>
+              <p>Materialcheck, Feuchtigkeit, Licht — wir definieren die ideale Aufbau-Strategie.</p>
+            </div>
+            <div class="process-card" data-animate>
+              <strong>02 · Konzept</strong>
+              <p>Musterflächen, Farbkonzept und Auswahl der besten Systeme für Ihr Objekt.</p>
+            </div>
+            <div class="process-card" data-animate>
+              <strong>03 · Ausführung</strong>
+              <p>Präzise Arbeitsschritte, geregelte Abläufe, tägliche Qualitätschecks.</p>
+            </div>
+            <div class="process-card" data-animate>
+              <strong>04 · Übergabe</strong>
+              <p>Dokumentation, Pflegehinweise und ein Ergebnis, das langfristig überzeugt.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="testimonial">
+            <div class="testimonial-card" data-animate>
+              <div class="eyebrow">Kundenstimme</div>
+              <h2>“Putztech liefert die Präzision, die unsere Investoren erwarten.”</h2>
+              <p>Die Baustelle war vom ersten Tag strukturiert, die Kommunikation auf Augenhöhe. Das Ergebnis wirkt wie aus einem Guss — hochwertig, gleichmäßig, ohne Korrekturen.</p>
+              <div class="testimonial-meta">
+                <span>Immobilienentwickler</span>
+                <span>Region Schaffhausen</span>
+              </div>
+            </div>
+            <div class="testimonial-panel" data-animate>
+              <h3>Warum Bauleiter uns vertrauen</h3>
+              <p>Wir koordinieren uns nahtlos mit Architekten, Bauleitern und Gewerken — für präzise Takte, saubere Übergänge und verlässliche Termine.</p>
+              <div class="badge-row">
+                <div class="badge">SIA-konforme Systeme</div>
+                <div class="badge">Fixe Ansprechpartner</div>
+                <div class="badge">Detaillierte Dokumentation</div>
+                <div class="badge">Premium Oberflächen</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="kontakt">
+        <div class="cta-card" data-animate>
+          <div class="cta-content">
+            <div class="eyebrow">Projektstart 2026</div>
+            <h2>Bereit für eine Oberfläche, die Ihr Objekt aufwertet?</h2>
+            <p>Wir beantworten Anfragen innerhalb von 48 Stunden, erstellen Musterflächen und begleiten die Umsetzung persönlich.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn" href="mailto:ptechmeier@bluewin.ch">ptechmeier@bluewin.ch</a>
+            <a class="btn secondary" href="tel:+41772616517">077 261 65 17</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo">
+            <img src="logo-original.jpg" alt="Putztech GmbH Logo" />
+            <strong>Putztech GmbH</strong>
+          </div>
+          <br />
+          Rheinweg 21 · 8200 Schaffhausen
+        </div>
+        <div>
+          Innenputz · Fassaden · Stuck · Restaurierung
+        </div>
+        <div>
+          © 2026 Putztech GmbH · Alle Rechte vorbehalten
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!prefersReduced) {
+      const items = document.querySelectorAll("[data-animate]");
+
+      items.forEach((item, index) => {
+        gsap.set(item, { y: 18 });
+        gsap.to(item, {
+          y: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          delay: 0.12 + index * 0.06,
+        });
+      });
+
+      const heroImage = document.querySelector(".hero-image");
+      gsap.to(heroImage, {
+        y: -8,
+        duration: 6,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+
+      const cards = document.querySelectorAll(".service-card, .project-card, .process-card");
+      cards.forEach((card) => {
+        card.addEventListener("mousemove", (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - 0.5;
+          const y = (event.clientY - rect.top) / rect.height - 0.5;
+          gsap.to(card, { rotateX: -y * 4, rotateY: x * 4, duration: 0.6, ease: "power2.out" });
+        });
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power2.out" });
+        });
+      });
+    }
+  </script>
+</body>
+</html>

@@ -106,12 +106,13 @@
       z-index: 100;
       padding: 20px 0;
       transition: all 0.4s var(--ease-out);
+      background: transparent;
     }
 
     header.scrolled {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 1px 0 var(--gray-100);
+      background: rgba(10, 10, 10, 0.72);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .header-inner {
@@ -129,10 +130,11 @@
     .logo-img {
       height: 48px;
       width: auto;
-      background: #fff;
-      padding: 6px 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+      filter: brightness(0) invert(1);
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      box-shadow: none;
     }
 
     .logo-text {
@@ -155,19 +157,20 @@
     .nav-links a {
       font-size: 0.9rem;
       font-weight: 500;
-      color: var(--gray-600);
+      color: var(--white);
       transition: color 0.3s;
     }
 
     .nav-links a:hover {
-      color: var(--dark);
+      color: rgba(255, 255, 255, 0.7);
     }
 
     .header-cta {
       display: none;
       padding: 12px 24px;
-      background: var(--dark);
+      background: transparent;
       color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.6);
       font-size: 0.9rem;
       font-weight: 500;
       border-radius: 100px;
@@ -179,7 +182,8 @@
     }
 
     .header-cta:hover {
-      background: var(--accent);
+      background: var(--white);
+      color: var(--dark);
       transform: translateY(-2px);
     }
 
@@ -203,7 +207,7 @@
     .menu-toggle span {
       width: 24px;
       height: 2px;
-      background: var(--dark);
+      background: var(--white);
       transition: all 0.3s;
     }
 
@@ -250,55 +254,8 @@
       transform: rotate(-45deg) translate(5px, -5px);
     }
 
-    /* ============================================
-       REGIONAL HERO
-    ============================================ */
-    .regional-hero {
-      position: relative;
-      width: 100%;
-      height: 40vh;
-      min-height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .regional-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.35) 100%),
-        url('schaffhausen-hero.jpg');
-      background-size: cover;
-      background-position: center;
-      transform: scale(1);
-      transform-origin: center;
-      animation: regional-kenburns 25s ease-in-out infinite alternate;
-      will-change: transform;
-    }
-
-    .regional-hero-inner {
-      position: relative;
-      z-index: 1;
-      padding: 0 24px;
-      max-width: 900px;
-    }
-
-    .regional-hero-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      color: var(--white);
-      text-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-    }
-
-    @keyframes regional-kenburns {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.1); }
+    .menu-toggle.active span {
+      background: var(--dark);
     }
 
     /* ============================================
@@ -308,20 +265,33 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding-top: 100px;
-      background: linear-gradient(180deg, var(--cream) 0%, var(--white) 100%);
+      padding: 140px 0 100px;
       position: relative;
       overflow: hidden;
+      color: var(--white);
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      top: 20%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(43, 122, 184, 0.08) 0%, transparent 70%);
+      inset: 0;
+      background-image: url('hero-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transform-origin: center;
+      animation: hero-kenburns 26s ease-in-out infinite alternate;
+      will-change: transform;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.45) 45%, rgba(0, 0, 0, 0.3) 100%);
+      z-index: 1;
       pointer-events: none;
     }
 
@@ -338,7 +308,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--accent);
+      color: rgba(255, 255, 255, 0.7);
       margin-bottom: 24px;
     }
 
@@ -346,7 +316,7 @@
       content: '';
       width: 40px;
       height: 1px;
-      background: var(--accent);
+      background: rgba(255, 255, 255, 0.6);
     }
 
     .hero-title {
@@ -355,7 +325,7 @@
       font-weight: 500;
       line-height: 1.05;
       letter-spacing: -0.03em;
-      color: var(--dark);
+      color: var(--white);
       margin-bottom: 32px;
       max-width: 900px;
     }
@@ -363,7 +333,7 @@
     .hero-subtitle {
       font-size: clamp(1.1rem, 2vw, 1.35rem);
       font-weight: 400;
-      color: var(--gray-600);
+      color: rgba(255, 255, 255, 0.8);
       max-width: 580px;
       margin-bottom: 48px;
       line-height: 1.7;
@@ -422,13 +392,31 @@
       color: var(--dark);
     }
 
+    .hero .btn-primary {
+      background: var(--white);
+      color: var(--dark);
+    }
+
+    .hero .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero .btn-secondary {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .hero .btn-secondary:hover {
+      color: var(--white);
+    }
+
     .hero-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 40px;
       margin-top: 80px;
       padding-top: 48px;
-      border-top: 1px solid var(--gray-100);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
       max-width: 600px;
     }
 
@@ -436,14 +424,19 @@
       font-family: var(--font-serif);
       font-size: 2.5rem;
       font-weight: 500;
-      color: var(--dark);
+      color: var(--white);
       line-height: 1;
       margin-bottom: 8px;
     }
 
     .stat-label {
       font-size: 0.85rem;
-      color: var(--gray-600);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes hero-kenburns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
     }
 
     /* ============================================
@@ -1206,6 +1199,14 @@
       animation: scrollPulse 2s ease-in-out infinite;
     }
 
+    .hero .scroll-indicator {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .hero .scroll-indicator::after {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
+    }
+
     @keyframes scrollPulse {
       0%, 100% { transform: scaleY(1); opacity: 1; }
       50% { transform: scaleY(0.5); opacity: 0.5; }
@@ -1252,48 +1253,42 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="container">
-      <div class="header-inner">
-        <a href="#" class="logo">
-          <img src="logo-hd.jpg" alt="Putztech" class="logo-img">
-        </a>
-        <nav>
-          <ul class="nav-links">
-            <li><a href="#leistungen">Leistungen</a></li>
-            <li><a href="#prozess">Ablauf</a></li>
-            <li><a href="#projekte">Projekte</a></li>
-            <li><a href="#kontakt">Kontakt</a></li>
-          </ul>
-        </nav>
-        <a href="#kontakt" class="header-cta">Kontakt aufnehmen</a>
-        <button class="menu-toggle" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <section class="regional-hero" aria-label="Regionaler Hinweis Schaffhausen">
-    <div class="regional-hero-inner">
-      <h2 class="regional-hero-title">Ihr Partner aus dem Kanton Schaffhausen</h2>
-    </div>
-  </section>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu">
-    <a href="#leistungen" class="mobile-link">Leistungen</a>
-    <a href="#prozess" class="mobile-link">Ablauf</a>
-    <a href="#projekte" class="mobile-link">Projekte</a>
-    <a href="#kontakt" class="mobile-link">Kontakt</a>
-    <a href="tel:+41772616517" class="btn-primary">077 261 65 17</a>
-  </div>
-
   <!-- HERO -->
   <section class="hero">
+    <!-- HEADER -->
+    <header>
+      <div class="container">
+        <div class="header-inner">
+          <a href="#" class="logo">
+            <img src="logo-hd.jpg" alt="Putztech" class="logo-img">
+          </a>
+          <nav>
+            <ul class="nav-links">
+              <li><a href="#leistungen">Leistungen</a></li>
+              <li><a href="#prozess">Ablauf</a></li>
+              <li><a href="#projekte">Projekte</a></li>
+              <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+          </nav>
+          <a href="#kontakt" class="header-cta">Kontakt aufnehmen</a>
+          <button class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+      <a href="#leistungen" class="mobile-link">Leistungen</a>
+      <a href="#prozess" class="mobile-link">Ablauf</a>
+      <a href="#projekte" class="mobile-link">Projekte</a>
+      <a href="#kontakt" class="mobile-link">Kontakt</a>
+      <a href="tel:+41772616517" class="btn-primary">077 261 65 17</a>
+    </div>
+
     <div class="container">
       <div class="hero-content">
         <div class="hero-eyebrow" data-animate>Gipserarbeiten Schaffhausen</div>

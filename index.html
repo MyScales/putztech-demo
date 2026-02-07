@@ -1206,10 +1206,14 @@
             }
         }
 
-        /* Scroll animations - always visible, GSAP handles animation */
-        .fade-up {
-            opacity: 1;
-            transform: translateY(0);
+        /* Fallback: ensure content visible after 2s even if GSAP fails */
+        @keyframes fadeInFallback {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-badge, .hero h1, .hero p, .hero-buttons, .hero-stats,
+        .fade-up, .service-card {
+            animation: fadeInFallback 0.5s ease 2s forwards;
         }
     </style>
 </head>
@@ -1517,39 +1521,45 @@
             }
         });
 
-        // Hero animations
-        gsap.from('.hero-badge', { opacity: 0, y: 30, duration: 1, delay: 0.2 });
-        gsap.from('.hero h1', { opacity: 0, y: 50, duration: 1, delay: 0.4 });
-        gsap.from('.hero p', { opacity: 0, y: 30, duration: 1, delay: 0.6 });
-        gsap.from('.hero-buttons', { opacity: 0, y: 30, duration: 1, delay: 0.8 });
-        gsap.from('.hero-stats', { opacity: 0, y: 30, duration: 1, delay: 1 });
-        gsap.from('.stat', { opacity: 0, y: 20, duration: 0.8, stagger: 0.2, delay: 1.2 });
+        // Hero animations - using fromTo for safety (content always ends visible)
+        gsap.fromTo('.hero-badge', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.2 });
+        gsap.fromTo('.hero h1', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, delay: 0.4 });
+        gsap.fromTo('.hero p', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.6 });
+        gsap.fromTo('.hero-buttons', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.8 });
+        gsap.fromTo('.hero-stats', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 1 });
+        gsap.fromTo('.stat', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, delay: 1.2 });
 
-        // Scroll animations for sections
+        // Scroll animations for sections - using fromTo
         document.querySelectorAll('.fade-up').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 40,
-                duration: 0.8
-            });
+            gsap.fromTo(el, 
+                { opacity: 0, y: 40 },
+                {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8
+                }
+            );
         });
 
-        // Service cards stagger
-        gsap.from('.service-card', {
-            scrollTrigger: {
-                trigger: '.services-grid',
-                start: 'top 80%'
-            },
-            opacity: 0,
-            y: 50,
-            duration: 0.8,
-            stagger: 0.2
-        });
+        // Service cards stagger - using fromTo
+        gsap.fromTo('.service-card', 
+            { opacity: 0, y: 50 },
+            {
+                scrollTrigger: {
+                    trigger: '.services-grid',
+                    start: 'top 80%'
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.2
+            }
+        );
 
         // Parallax effect for hero background
         const heroBg = document.querySelector('.hero-bg');

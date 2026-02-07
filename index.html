@@ -785,7 +785,9 @@
     .project-card {
       position: relative;
       aspect-ratio: 16/10;
-      background: #e5e5e5;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
       border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
@@ -830,32 +832,6 @@
     .project-meta {
       font-size: 0.9rem;
       color: rgba(255,255,255,0.7);
-    }
-
-    .project-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 8px;
-      background: #e5e5e5;
-      color: var(--gray-600);
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      border: 1px dashed #cfcfcf;
-    }
-
-    .project-placeholder span {
-      font-size: 0.95rem;
-    }
-
-    .project-placeholder .project-placeholder-sub {
-      font-size: 0.75rem;
-      color: var(--gray-400);
-      letter-spacing: 0.08em;
     }
 
     /* ============================================
@@ -1448,44 +1424,28 @@
         </a>
       </div>
       <div class="projects-grid">
-        <div class="project-card" data-animate data-animate-delay="1">
-          <div class="project-placeholder">
-            <span>Ihr Projekt</span>
-            <span class="project-placeholder-sub">Platzhalter</span>
-          </div>
+        <div class="project-card" style="background-image: url('project-1.jpg');" data-animate data-animate-delay="1">
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Altbausanierung</h3>
             <p class="project-meta">Innenputz · Schaffhausen</p>
           </div>
         </div>
-        <div class="project-card" data-animate data-animate-delay="2">
-          <div class="project-placeholder">
-            <span>Ihr Projekt</span>
-            <span class="project-placeholder-sub">Platzhalter</span>
-          </div>
+        <div class="project-card" style="background-image: url('project-2.jpg');" data-animate data-animate-delay="2">
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Neubau EFH</h3>
             <p class="project-meta">Fassade & Innenputz · Neuhausen</p>
           </div>
         </div>
-        <div class="project-card" data-animate data-animate-delay="3">
-          <div class="project-placeholder">
-            <span>Ihr Projekt</span>
-            <span class="project-placeholder-sub">Platzhalter</span>
-          </div>
+        <div class="project-card" style="background-image: url('project-3.jpg');" data-animate data-animate-delay="3">
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Gewerberaum</h3>
             <p class="project-meta">Akustikputz · Beringen</p>
           </div>
         </div>
-        <div class="project-card" data-animate data-animate-delay="4">
-          <div class="project-placeholder">
-            <span>Ihr Projekt</span>
-            <span class="project-placeholder-sub">Platzhalter</span>
-          </div>
+        <div class="project-card" style="background-image: url('project-4.jpg');" data-animate data-animate-delay="4">
           <div class="project-overlay"></div>
           <div class="project-content">
             <h3 class="project-title">Stuckrestaurierung</h3>

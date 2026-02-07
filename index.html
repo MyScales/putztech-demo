@@ -1,1675 +1,919 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Putztech GmbH | Gipser & Trockenbau Schaffhausen</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #0f172a;
-            --accent: #f59e0b;
-            --accent-dark: #d97706;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --bg: #fafafa;
-            --white: #ffffff;
-            --glow: rgba(245, 158, 11, 0.25);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 5%;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            letter-spacing: -0.5px;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            background: var(--accent);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .nav-cta:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--primary) 0%, #1e3a5f 100%);
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80') center/cover;
-            opacity: 0.15;
-            transform: translateY(0px);
-            will-change: transform;
-        }
-
-        .hero-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gradientFlow 18s ease-in-out infinite;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 5%;
-            padding-top: 100px;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--accent);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 700;
-            color: var(--white);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -2px;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 2.5rem;
-            max-width: 550px;
-            line-height: 1.8;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255,255,255,0.1);
-            color: var(--white);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            margin-top: 4rem;
-            padding-top: 3rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .stat {
-            text-align: left;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1;
-        }
-
-        .stat-label {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 8rem 5%;
-            background: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .services::after {
-            content: '';
-            position: absolute;
-            inset: -30% -10% auto auto;
-            width: 420px;
-            height: 420px;
-            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
-            animation: gradientFlow 16s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-tag {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .section-desc {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background: var(--bg);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            transition: transform 0.35s ease;
-        }
-
-        .service-card:hover .service-icon {
-            animation: iconBounce 0.8s ease;
-        }
-
-        @keyframes iconBounce {
-            0% { transform: translateY(0); }
-            30% { transform: translateY(-6px); }
-            60% { transform: translateY(2px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* Before / After Section */
-        .before-after {
-            padding: 8rem 5%;
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .before-after::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            left: -20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(15, 23, 42, 0.08) 0%, transparent 70%);
-            animation: gradientFlow 20s ease-in-out infinite;
-        }
-
-        .comparison-wrapper {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .comparison-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
-        }
-
-        .comparison-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .comparison-desc {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
-
-        .comparison-list {
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .comparison-list li {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .comparison-list li span {
-            width: 26px;
-            height: 26px;
-            background: var(--accent);
-            color: var(--white);
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-
-        .comparison-visual {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            min-height: 360px;
-            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.12);
-        }
-
-        .comparison-visual img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .comparison-visual .after {
-            clip-path: inset(0 50% 0 0);
-            transition: clip-path 0.2s ease;
-        }
-
-        .comparison-slider {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            z-index: 2;
-        }
-
-        .comparison-slider input[type="range"] {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 6px;
-            border-radius: 999px;
-            background: rgba(255,255,255,0.7);
-            outline: none;
-        }
-
-        .comparison-slider input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        }
-
-        .comparison-slider input[type="range"]::-moz-range-thumb {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: none;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        }
-
-        .service-card h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .service-card p {
-            color: var(--text-light);
-            line-height: 1.7;
-        }
-
-        /* Why Us Section */
-        .why-us {
-            padding: 8rem 5%;
-            background: var(--primary);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .why-us::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .why-us .section-tag,
-        .why-us .section-title {
-            color: var(--white);
-        }
-
-        .why-us .section-desc {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .why-item {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .why-number {
-            font-size: 4rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
-
-        .why-item h3 {
-            color: var(--white);
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .why-item p {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.95rem;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 8rem 5%;
-            background: var(--bg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonials::before {
-            content: '';
-            position: absolute;
-            right: -10%;
-            top: -30%;
-            width: 420px;
-            height: 420px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
-            animation: gradientFlow 22s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .testimonials-grid {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .testimonial-carousel {
-            position: relative;
-            overflow: hidden;
-            min-height: 320px;
-        }
-
-        .testimonial {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 20px;
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transform: translateY(10px) scale(0.98);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .testimonial.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            position: relative;
-        }
-
-        .testimonial-dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.6rem;
-            margin-top: 2rem;
-        }
-
-        .testimonial-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(15, 23, 42, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-dot.active {
-            background: var(--accent);
-            transform: scale(1.2);
-        }
-
-        .testimonial::before {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            left: 25px;
-            font-size: 5rem;
-            color: var(--accent);
-            opacity: 0.2;
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-
-        .testimonial-text {
-            font-size: 1.1rem;
-            color: var(--text);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .author-info h4 {
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .author-info span {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 8rem 5%;
-            background: var(--white);
-        }
-
-        .contact-wrapper {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-info h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
-
-        .contact-info p {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--bg);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-        }
-
-        .contact-item span {
-            font-weight: 500;
-        }
-
-        .contact-form {
-            background: var(--bg);
-            padding: 2.5rem;
-            border-radius: 20px;
-        }
-
-        .map-embed {
-            margin-top: 2rem;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
-        }
-
-        .map-embed iframe {
-            width: 100%;
-            height: 280px;
-            border: 0;
-        }
-
-        /* Gallery */
-        .gallery {
-            padding: 8rem 5%;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            min-height: 180px;
-            background: #e2e8f0;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .gallery-item span {
-            position: absolute;
-            left: 14px;
-            bottom: 12px;
-            color: var(--white);
-            font-weight: 600;
-            text-shadow: 0 6px 18px rgba(0,0,0,0.4);
-        }
-
-        /* Floating CTA */
-        .floating-cta {
-            position: fixed;
-            right: 18px;
-            bottom: 18px;
-            z-index: 998;
-            display: none;
-            background: var(--accent);
-            color: var(--white);
-            padding: 0.9rem 1.2rem;
-            border-radius: 999px;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 14px 30px rgba(245, 158, 11, 0.35);
-            animation: floatPulse 2.4s ease-in-out infinite;
-        }
-
-        @keyframes floatPulse {
-            0% { transform: translateY(0); box-shadow: 0 14px 30px rgba(245, 158, 11, 0.35); }
-            50% { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(245, 158, 11, 0.45); }
-            100% { transform: translateY(0); box-shadow: 0 14px 30px rgba(245, 158, 11, 0.35); }
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid transparent;
-            background: var(--white);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 1rem;
-            background: var(--accent);
-            color: var(--white);
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .form-submit:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: rgba(255,255,255,0.6);
-            padding: 3rem 5%;
-            text-align: center;
-        }
-
-        footer .logo {
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 1001;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 3px;
-            transition: all 0.3s;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--white);
-            z-index: 999;
-            padding: 100px 5% 2rem;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .mobile-menu.active {
-            display: flex;
-        }
-
-        .mobile-menu a {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary);
-            text-decoration: none;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--bg);
-            transition: color 0.3s;
-        }
-
-        .mobile-menu a:hover {
-            color: var(--accent);
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            .nav-links {
-                display: none;
-            }
-
-            .nav-cta {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-        }
-
-        @media (max-width: 768px) {
-            /* Navigation */
-            nav {
-                padding: 1rem 5%;
-            }
-
-            /* Hero */
-            .hero {
-                min-height: auto;
-                padding: 120px 0 60px;
-            }
-
-            .hero-content {
-                padding-top: 0;
-            }
-
-            .hero-badge {
-                font-size: 0.75rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                letter-spacing: -1px;
-                line-height: 1.15;
-            }
-
-            .hero p {
-                font-size: 1rem;
-                margin-bottom: 2rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-                padding: 1rem 1.5rem;
-                min-height: 52px;
-            }
-
-            .hero-stats {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 1.5rem;
-                margin-top: 2.5rem;
-                padding-top: 2rem;
-            }
-
-            .stat {
-                flex: 1;
-                min-width: 80px;
-                text-align: center;
-            }
-
-            .stat-number {
-                font-size: 1.8rem;
-            }
-
-            .stat-label {
-                font-size: 0.75rem;
-            }
-
-            /* Services */
-            .services {
-                padding: 4rem 5%;
-            }
-
-            .section-header {
-                margin-bottom: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .service-card {
-                padding: 2rem;
-            }
-
-            .service-icon {
-                width: 56px;
-                height: 56px;
-                font-size: 1.5rem;
-            }
-
-            .service-card h3 {
-                font-size: 1.2rem;
-            }
-
-            /* Before / After */
-            .before-after {
-                padding: 4rem 5%;
-            }
-
-            .comparison-wrapper {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .comparison-visual {
-                min-height: 260px;
-            }
-
-            /* Why Us */
-            .why-us {
-                padding: 4rem 5%;
-            }
-
-            .why-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-
-            .why-item {
-                padding: 1.5rem 1rem;
-            }
-
-            .why-number {
-                font-size: 2.5rem;
-            }
-
-            .why-item h3 {
-                font-size: 1.1rem;
-            }
-
-            .why-item p {
-                font-size: 0.85rem;
-            }
-
-            /* Testimonials */
-            .testimonials {
-                padding: 4rem 5%;
-            }
-
-            .testimonial {
-                padding: 2rem;
-            }
-
-            .testimonial::before {
-                font-size: 3rem;
-                top: 15px;
-                left: 20px;
-            }
-
-            .testimonial-text {
-                font-size: 1rem;
-            }
-
-            /* Gallery */
-            .gallery {
-                padding: 4rem 5%;
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            /* Contact */
-            .contact {
-                padding: 4rem 5%;
-            }
-
-            .contact-wrapper {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .contact-info h2 {
-                font-size: 1.8rem;
-            }
-
-            .contact-form {
-                padding: 1.5rem;
-            }
-
-            .form-group input,
-            .form-group textarea {
-                padding: 0.9rem;
-                font-size: 16px; /* Prevents iOS zoom */
-            }
-
-            .form-submit {
-                min-height: 52px;
-            }
-
-            .map-embed iframe {
-                height: 220px;
-            }
-
-            .floating-cta {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            /* Footer */
-            footer {
-                padding: 2rem 5%;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .hero h1 {
-                font-size: 1.9rem;
-            }
-
-            .why-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-stats {
-                gap: 1rem;
-            }
-
-            .stat {
-                min-width: 70px;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Fallback: ensure content visible after 2s even if GSAP fails */
-        @keyframes fadeInFallback {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hero-badge, .hero h1, .hero p, .hero-buttons, .hero-stats,
-        .fade-up, .service-card {
-            animation: fadeInFallback 0.5s ease 2s forwards;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Putztech GmbH — Premium Stuck & Verputz in Schaffhausen</title>
+  <meta name="description" content="Putztech GmbH: Hochwertige Putzarbeiten, Stuck und Fassaden in Schaffhausen. Präzision, Materialkunde und saubere Ausführung für Privat und Gewerbe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #0e1414;
+      --bg-2: #121a1b;
+      --bg-3: #0b1010;
+      --surface: #131c1d;
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --text: #f4f7f4;
+      --muted: #b8c4bf;
+      --accent: #8dd9c0;
+      --accent-2: #e9c37a;
+      --accent-3: #7aa0e9;
+      --grid: rgba(255, 255, 255, 0.05);
+      --shadow: 0 30px 80px rgba(5, 10, 10, 0.55);
+      --radius-lg: 32px;
+      --radius-md: 20px;
+      --radius-sm: 12px;
+      --maxw: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Manrope", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(141, 217, 192, 0.16), transparent 70%),
+        radial-gradient(900px 500px at 90% 10%, rgba(233, 195, 122, 0.12), transparent 70%),
+        linear-gradient(160deg, var(--bg-3), var(--bg));
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      z-index: 1;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(10, 15, 15, 0.86), rgba(10, 15, 15, 0.4));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    .logo span {
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-size: 1.1rem;
+      text-transform: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(130deg, rgba(141, 217, 192, 0.24), rgba(122, 160, 233, 0.28));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-cta::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: translateX(-120%);
+      transition: transform 0.9s ease;
+    }
+
+    .nav-cta:hover::after {
+      transform: translateX(120%);
+    }
+
+    .hero {
+      position: relative;
+      padding: 110px 28px 70px;
+      z-index: 2;
+    }
+
+    .hero-grid {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 28px;
+    }
+
+    .hero-copy {
+      grid-column: span 7;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      font-size: clamp(2.6rem, 5vw, 4.4rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-copy p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
+      background: linear-gradient(140deg, var(--accent), var(--accent-3));
+      color: #061010;
+      box-shadow: 0 18px 40px rgba(141, 217, 192, 0.25);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 25px 60px rgba(141, 217, 192, 0.35);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: none;
+    }
+
+    .hero-card {
+      grid-column: span 5;
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-image {
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 280px;
+      position: relative;
+      background: linear-gradient(140deg, rgba(20, 30, 30, 0.4), rgba(10, 14, 14, 0.9));
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+    }
+
+    .hero-image::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=80");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(0.85) contrast(1.05);
+      transform: scale(1.08);
+      mask-image: radial-gradient(circle at 30% 20%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.65) 55%, rgba(0, 0, 0, 0.35) 100%);
+    }
+
+    .hero-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8, 10, 10, 0.2) 0%, rgba(8, 10, 10, 0.78) 70%, rgba(8, 10, 10, 0.95) 100%);
+    }
+
+    .hero-image-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 6px;
+    }
+
+    .hero-image-content strong {
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-image-content span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(10, 12, 12, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat h3 {
+      font-size: 1.4rem;
+      letter-spacing: 0.02em;
+    }
+
+    .stat p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .section {
+      padding: 80px 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      gap: 36px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .service-card {
+      padding: 26px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+      backdrop-filter: blur(16px);
+      transition: transform 0.4s ease, border 0.4s ease;
+      display: grid;
+      gap: 14px;
+      min-height: 230px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(141, 217, 192, 0.35);
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .service-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .project-card {
+      grid-column: span 4;
+      min-height: 260px;
+      border-radius: 26px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #0f1516;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(0.8) contrast(1.1);
+      transform: scale(1.06);
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6, 9, 9, 0.1) 0%, rgba(6, 9, 9, 0.7) 65%, rgba(6, 9, 9, 0.95) 100%);
+    }
+
+    .project-card:nth-child(1)::before {
+      background-image: url("https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .project-card:nth-child(2)::before {
+      background-image: url("https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .project-card:nth-child(3)::before {
+      background-image: url("https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .project-content {
+      position: relative;
+      z-index: 1;
+      padding: 22px;
+      display: grid;
+      gap: 8px;
+      height: 100%;
+      align-content: end;
+    }
+
+    .project-content h4 {
+      font-size: 1.2rem;
+    }
+
+    .project-content span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .process-card {
+      padding: 22px;
+      border-radius: var(--radius-md);
+      background: rgba(12, 16, 16, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: grid;
+      gap: 12px;
+    }
+
+    .process-card strong {
+      font-size: 1.1rem;
+    }
+
+    .process-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .testimonial {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .testimonial-card {
+      grid-column: span 7;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      gap: 16px;
+    }
+
+    .testimonial-card p {
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .testimonial-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .testimonial-panel {
+      grid-column: span 5;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, rgba(122, 160, 233, 0.2), rgba(12, 16, 16, 0.7));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      gap: 14px;
+    }
+
+    .testimonial-panel h3 {
+      font-size: 1.4rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .cta {
+      padding: 90px 28px 110px;
+    }
+
+    .cta-card {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(140deg, rgba(141, 217, 192, 0.16), rgba(122, 160, 233, 0.14));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(233, 195, 122, 0.25), transparent 60%),
+        radial-gradient(circle at 80% 0%, rgba(141, 217, 192, 0.2), transparent 55%);
+      opacity: 0.6;
+    }
+
+    .cta-content {
+      grid-column: span 7;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 14px;
+    }
+
+    .cta-content h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+    }
+
+    .cta-actions {
+      grid-column: span 5;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 14px;
+      justify-items: start;
+    }
+
+    footer {
+      padding: 40px 28px 60px;
+      color: var(--muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner strong {
+      color: var(--text);
+    }
+
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(180deg, var(--grid) 1px, transparent 1px);
+      background-size: 120px 120px;
+      mask-image: radial-gradient(circle at 20% 10%, black 0%, transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero-copy,
+      .hero-card {
+        grid-column: span 12;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .projects .project-card {
+        grid-column: span 6;
+      }
+
+      .process {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .testimonial-card,
+      .testimonial-panel {
+        grid-column: span 12;
+      }
+
+      .cta-content,
+      .cta-actions {
+        grid-column: span 12;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 80px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .projects .project-card {
+        grid-column: span 12;
+      }
+
+      .process {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-card {
+        padding: 32px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="logo">Putz<span>tech</span></div>
-        <ul class="nav-links">
-            <li><a href="#services">Leistungen</a></li>
-            <li><a href="#before-after">Vorher/Nachher</a></li>
-            <li><a href="#why-us">Über uns</a></li>
-            <li><a href="#gallery">Arbeiten</a></li>
-            <li><a href="#testimonials">Referenzen</a></li>
-            <li><a href="#contact">Kontakt</a></li>
-        </ul>
-        <a href="#contact" class="nav-cta">Offerte anfragen</a>
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+  <div class="page">
+    <div class="noise"></div>
+    <header>
+      <nav class="nav">
+        <div class="logo">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: radial-gradient(circle, var(--accent), transparent); border: 1px solid rgba(255,255,255,0.2);"></div>
+          <span>Putztech GmbH</span>
         </div>
-    </nav>
+        <div class="nav-links">
+          <a href="#leistungen">Leistungen</a>
+          <a href="#projekte">Projekte</a>
+          <a href="#prozess">Prozess</a>
+          <a href="#kontakt">Kontakt</a>
+        </div>
+        <a class="nav-cta" href="#kontakt">Erstgespräch buchen</a>
+      </nav>
+    </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#services" onclick="toggleMenu()">Leistungen</a>
-        <a href="#before-after" onclick="toggleMenu()">Vorher/Nachher</a>
-        <a href="#why-us" onclick="toggleMenu()">Über uns</a>
-        <a href="#gallery" onclick="toggleMenu()">Unsere Arbeiten</a>
-        <a href="#testimonials" onclick="toggleMenu()">Referenzen</a>
-        <a href="#contact" onclick="toggleMenu()">Kontakt anfragen</a>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-pattern"></div>
-        <div class="hero-content">
-            <span class="hero-badge">✦ Ihr Gipser in der Region</span>
-            <h1>Verputzt.<br><span>Perfekt.</span></h1>
-            <p>Seit über 20 Jahren Ihr zuverlässiger Partner für Gipserarbeiten, Trockenbau und Fassadengestaltung in Schaffhausen und Umgebung.</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary">
-                    Jetzt Offerte anfragen
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </a>
-                <a href="#services" class="btn btn-secondary">Unsere Leistungen</a>
+    <main>
+      <section class="hero">
+        <div class="grid-lines"></div>
+        <div class="hero-grid">
+          <div class="hero-copy" data-animate>
+            <div class="eyebrow">Schaffhausen · Premium Putz & Stuck</div>
+            <h1>Oberflächen, die Vertrauen schaffen — für anspruchsvolle Immobilien.</h1>
+            <p>
+              Putztech GmbH vereint Handwerk, Materialwissen und Projektführung auf Agentur-Niveau.
+              Von historischen Fassaden bis zu modernen Innenräumen liefern wir exakte Details, saubere Kanten
+              und langlebige Ergebnisse.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="#kontakt">Projekt anfragen</a>
+              <a class="btn secondary" href="#projekte">Referenzen ansehen</a>
+            </div>
+          </div>
+          <div class="hero-card" data-animate>
+            <div class="hero-image">
+              <div class="hero-image-content">
+                <strong>Ausführung ohne Kompromisse</strong>
+                <span>Innenputz · Fassaden · Stuck · Renovationen</span>
+              </div>
             </div>
             <div class="hero-stats">
-                <div class="stat">
-                    <div class="stat-number" data-target="20" data-suffix="+">0</div>
-                    <div class="stat-label">Jahre Erfahrung</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number" data-target="500" data-suffix="+">0</div>
-                    <div class="stat-label">Zufriedene Kunden</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number" data-target="100" data-suffix="%">0</div>
-                    <div class="stat-label">Regional</div>
-                </div>
+              <div class="stat">
+                <h3>20+</h3>
+                <p>Jahre regionale Expertise</p>
+              </div>
+              <div class="stat">
+                <h3>4.9★</h3>
+                <p>Kundenzufriedenheit</p>
+              </div>
+              <div class="stat">
+                <h3>48h</h3>
+                <p>Antwortzeit auf Anfragen</p>
+              </div>
+              <div class="stat">
+                <h3>100%</h3>
+                <p>Saubere Übergabe</p>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="section-header fade-up">
-            <div class="section-tag">Unsere Leistungen</div>
-            <h2 class="section-title">Handwerk mit Präzision</h2>
-            <p class="section-desc">Von der Idee bis zur fertigen Oberfläche – wir sind Ihr Partner für alle Gipserarbeiten.</p>
+      <section class="section" id="leistungen">
+        <div class="section-inner">
+          <div class="section-title">
+            <h2>Leistungen für höchste Ansprüche</h2>
+            <p>Jedes Objekt erhält eine präzise Materialstrategie — abgestimmt auf Klima, Nutzung und Architektur.</p>
+          </div>
+          <div class="services-grid">
+            <article class="service-card" data-animate>
+              <h3>Innenputz & Designoberflächen</h3>
+              <p>Feine Oberflächen, die Licht perfekt aufnehmen — von klassisch glatt bis mineralisch strukturiert.</p>
+              <div class="service-meta"><span>Farbkonzept</span><span>Materialberatung</span></div>
+            </article>
+            <article class="service-card" data-animate>
+              <h3>Fassaden & Wärmedämmung</h3>
+              <p>Wetterbeständige Fassaden mit klaren Linien, schützenden Details und nachhaltiger Dämmung.</p>
+              <div class="service-meta"><span>ETA-Systeme</span><span>Langzeitgarantie</span></div>
+            </article>
+            <article class="service-card" data-animate>
+              <h3>Stuck & Restaurierung</h3>
+              <p>Historische Substanz erhalten, neue Eleganz schaffen — für Altbau, Hotels und Villen.</p>
+              <div class="service-meta"><span>Manufaktur</span><span>Detailrekonstruktion</span></div>
+            </article>
+          </div>
         </div>
-        <div class="services-grid">
-            <div class="service-card fade-up">
-                <div class="service-icon">🏠</div>
-                <h3>Innenputz</h3>
-                <p>Wände und Decken perfekt verputzt. Ob Neubau oder Renovation – wir schaffen glatte, saubere Oberflächen für Ihr Zuhause.</p>
-            </div>
-            <div class="service-card fade-up">
-                <div class="service-icon">🏗️</div>
-                <h3>Fassade</h3>
-                <p>Witterungsbeständig und ästhetisch. Wir gestalten Aussenfassaden, die nicht nur schützen, sondern auch beeindrucken.</p>
-            </div>
-            <div class="service-card fade-up">
-                <div class="service-icon">📐</div>
-                <h3>Trockenbau</h3>
-                <p>Flexible Raumlösungen nach Mass. Trennwände, Deckenverkleidungen und mehr – schnell, sauber und professionell.</p>
-            </div>
-        </div>
-    </section>
+      </section>
 
-    <!-- Before / After Section -->
-    <section class="before-after" id="before-after">
-        <div class="section-header fade-up">
-            <div class="section-tag">Vorher / Nachher</div>
-            <h2 class="section-title">Der Unterschied ist sichtbar</h2>
-            <p class="section-desc">Bewegen Sie den Regler und erleben Sie den Vorher/Nachher-Effekt unserer Gipserarbeiten.</p>
+      <section class="section" id="projekte">
+        <div class="section-inner">
+          <div class="section-title">
+            <h2>Projekte mit Klarheit und Substanz</h2>
+            <p>Ausgewählte Arbeiten aus Schaffhausen und Umgebung — jedes Projekt dokumentiert vom ersten Muster bis zur Abnahme.</p>
+          </div>
+          <div class="projects">
+            <article class="project-card" data-animate>
+              <div class="project-content">
+                <h4>Altbauvilla, Rheinfallstrasse</h4>
+                <span>Fassade · Stuckprofilierung · Farbkonzept</span>
+              </div>
+            </article>
+            <article class="project-card" data-animate>
+              <div class="project-content">
+                <h4>Büroetage, Munotstrasse</h4>
+                <span>Innenputz · Akustikflächen · Projektleitung</span>
+              </div>
+            </article>
+            <article class="project-card" data-animate>
+              <div class="project-content">
+                <h4>Private Residenz, Beringen</h4>
+                <span>Designputz · Kalkglätte · Lichtführung</span>
+              </div>
+            </article>
+          </div>
         </div>
-        <div class="comparison-wrapper">
-            <div class="comparison-visual fade-up">
-                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80" alt="Vorher">
-                <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1200&q=80" alt="Nachher" class="after">
-                <div class="comparison-slider">
-                    <input type="range" min="0" max="100" value="50" aria-label="Vorher-Nachher Vergleich">
-                </div>
-            </div>
-            <div class="comparison-card fade-up">
-                <div class="comparison-title">Oberflächen, die beeindrucken</div>
-                <p class="comparison-desc">Saubere Kanten, perfekte Übergänge und eine Oberfläche, die sofort Wertigkeit vermittelt.</p>
-                <ul class="comparison-list">
-                    <li><span>✓</span> Sauberer Rückbau & Schutz der Umgebung</li>
-                    <li><span>✓</span> Präzise Ebenheit & exakte Kanten</li>
-                    <li><span>✓</span> Termin- und Budgettreue</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+      </section>
 
-    <!-- Why Us Section -->
-    <section class="why-us" id="why-us">
-        <div class="section-header fade-up">
-            <div class="section-tag">Warum Putztech</div>
-            <h2 class="section-title">Qualität aus der Region</h2>
-            <p class="section-desc">Was uns von anderen unterscheidet? Unser Engagement für Perfektion.</p>
+      <section class="section" id="prozess">
+        <div class="section-inner">
+          <div class="section-title">
+            <h2>Ein Prozess, der Ruhe schafft</h2>
+            <p>Transparente Planung, saubere Baustellenführung und klare Kommunikation von Erstkontakt bis Übergabe.</p>
+          </div>
+          <div class="process">
+            <div class="process-card" data-animate>
+              <strong>01 · Analyse</strong>
+              <p>Materialcheck, Feuchtigkeit, Licht — wir definieren die ideale Aufbau-Strategie.</p>
+            </div>
+            <div class="process-card" data-animate>
+              <strong>02 · Konzept</strong>
+              <p>Musterflächen, Farbkonzept und Auswahl der besten Systeme für Ihr Objekt.</p>
+            </div>
+            <div class="process-card" data-animate>
+              <strong>03 · Ausführung</strong>
+              <p>Präzise Arbeitsschritte, geregelte Abläufe, tägliche Qualitätschecks.</p>
+            </div>
+            <div class="process-card" data-animate>
+              <strong>04 · Übergabe</strong>
+              <p>Dokumentation, Pflegehinweise und ein Ergebnis, das langfristig überzeugt.</p>
+            </div>
+          </div>
         </div>
-        <div class="why-grid">
-            <div class="why-item fade-up">
-                <div class="why-number">01</div>
-                <h3>Erfahrung</h3>
-                <p>Über zwei Jahrzehnte Expertise in allen Bereichen des Gipserhandwerks.</p>
-            </div>
-            <div class="why-item fade-up">
-                <div class="why-number">02</div>
-                <h3>Qualität</h3>
-                <p>Wir arbeiten mit den besten Materialien und modernsten Techniken.</p>
-            </div>
-            <div class="why-item fade-up">
-                <div class="why-number">03</div>
-                <h3>Regional</h3>
-                <p>Kurze Wege, persönlicher Service – wir sind für Sie da.</p>
-            </div>
-            <div class="why-item fade-up">
-                <div class="why-number">04</div>
-                <h3>Zuverlässig</h3>
-                <p>Termine werden eingehalten, Versprechen werden gehalten.</p>
-            </div>
-        </div>
-    </section>
+      </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="section-header fade-up">
-            <div class="section-tag">Referenzen</div>
-            <h2 class="section-title">Was unsere Kunden sagen</h2>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-carousel">
-                <div class="testimonial active">
-                    <p class="testimonial-text">Die Arbeit von Putztech hat unsere Erwartungen übertroffen. Pünktlich, sauber und das Ergebnis ist perfekt. Absolute Empfehlung!</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MK</div>
-                        <div class="author-info">
-                            <h4>Martin Keller</h4>
-                            <span>Hausbesitzer, Neuhausen</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial">
-                    <p class="testimonial-text">Professionelle Beratung und einwandfreie Ausführung. Unsere neue Fassade ist ein echter Hingucker. Danke an das ganze Team!</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SB</div>
-                        <div class="author-info">
-                            <h4>Sandra Brunner</h4>
-                            <span>Architektin, Schaffhausen</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial">
-                    <p class="testimonial-text">Vom ersten Gespräch bis zur Fertigstellung alles top organisiert. Das Team war schnell, freundlich und extrem sauber.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">FL</div>
-                        <div class="author-info">
-                            <h4>Fabienne Lutz</h4>
-                            <span>Wohnungsbesitzerin, Beringen</span>
-                        </div>
-                    </div>
-                </div>
+      <section class="section">
+        <div class="section-inner">
+          <div class="testimonial">
+            <div class="testimonial-card" data-animate>
+              <div class="eyebrow">Kundenstimme</div>
+              <h2>“Putztech liefert die Präzision, die unsere Investoren erwarten.”</h2>
+              <p>Die Baustelle war vom ersten Tag strukturiert, die Kommunikation auf Augenhöhe. Das Ergebnis wirkt wie aus einem Guss — hochwertig, gleichmäßig, ohne Korrekturen.</p>
+              <div class="testimonial-meta">
+                <span>H. Widmer · Immobilienentwicklung</span>
+                <span>Schaffhausen</span>
+              </div>
             </div>
-            <div class="testimonial-dots" aria-label="Testimonials Navigation">
-                <span class="testimonial-dot active" data-index="0"></span>
-                <span class="testimonial-dot" data-index="1"></span>
-                <span class="testimonial-dot" data-index="2"></span>
+            <div class="testimonial-panel" data-animate>
+              <h3>Warum Bauleiter uns vertrauen</h3>
+              <p>Wir koordinieren uns nahtlos mit Architekten, Bauleitern und Gewerken — für präzise Takte, saubere Übergänge und verlässliche Termine.</p>
+              <div class="badge-row">
+                <div class="badge">SIA-konforme Systeme</div>
+                <div class="badge">Fixe Ansprechpartner</div>
+                <div class="badge">Detaillierte Dokumentation</div>
+                <div class="badge">Premium Oberflächen</div>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Gallery Section -->
-    <section class="gallery" id="gallery">
-        <div class="section-header fade-up">
-            <div class="section-tag">Unsere Arbeiten</div>
-            <h2 class="section-title">Ausgewählte Projekte</h2>
-            <p class="section-desc">Ein Blick auf frische Oberflächen, präzise Details und saubere Abschlüsse.</p>
+      <section class="cta" id="kontakt">
+        <div class="cta-card" data-animate>
+          <div class="cta-content">
+            <div class="eyebrow">Projektstart 2026</div>
+            <h2>Bereit für eine Oberfläche, die Ihr Objekt aufwertet?</h2>
+            <p>Wir beantworten Anfragen innerhalb von 48 Stunden, erstellen Musterflächen und begleiten die Umsetzung persönlich.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn" href="mailto:kontakt@putztech.ch">kontakt@putztech.ch</a>
+            <a class="btn secondary" href="tel:+41520000000">+41 52 000 00 00</a>
+          </div>
         </div>
-        <div class="gallery-grid">
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80" alt="Innenputz Projekt">
-                <span>Innenputz</span>
-            </div>
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80" alt="Fassade Projekt">
-                <span>Fassade</span>
-            </div>
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1505843513577-22bb7d21e455?w=800&q=80" alt="Trockenbau Projekt">
-                <span>Trockenbau</span>
-            </div>
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80" alt="Detailarbeit">
-                <span>Detailarbeit</span>
-            </div>
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80" alt="Wohnraum">
-                <span>Wohnraum</span>
-            </div>
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80" alt="Renovation">
-                <span>Renovation</span>
-            </div>
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?w=800&q=80" alt="Neubau">
-                <span>Neubau</span>
-            </div>
-            <div class="gallery-item fade-up">
-                <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=800&q=80" alt="Teamwork">
-                <span>Teamwork</span>
-            </div>
-        </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-wrapper">
-            <div class="contact-info fade-up">
-                <h2>Lassen Sie uns<br>sprechen.</h2>
-                <p>Haben Sie ein Projekt im Kopf? Kontaktieren Sie uns für eine unverbindliche Offerte.</p>
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <span>Rheinweg 21, 8200 Schaffhausen</span>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <span>052 123 45 67</span>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <span>info@putztech.ch</span>
-                    </div>
-                </div>
-                <div class="map-embed">
-                    <iframe title="Google Maps Platzhalter" src="https://www.google.com/maps?q=Schaffhausen%20Schweiz&output=embed" loading="lazy"></iframe>
-                </div>
-            </div>
-            <form class="contact-form fade-up">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" placeholder="Ihr Name">
-                </div>
-                <div class="form-group">
-                    <label>E-Mail</label>
-                    <input type="email" placeholder="ihre@email.ch">
-                </div>
-                <div class="form-group">
-                    <label>Telefon</label>
-                    <input type="tel" placeholder="079 123 45 67">
-                </div>
-                <div class="form-group">
-                    <label>Nachricht</label>
-                    <textarea placeholder="Beschreiben Sie Ihr Projekt..."></textarea>
-                </div>
-                <button type="submit" class="form-submit">Offerte anfragen</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
-        <div class="logo">Putz<span>tech</span></div>
-        <p>© 2024 Putztech GmbH. Alle Rechte vorbehalten.</p>
+      <div class="footer-inner">
+        <div>
+          <strong>Putztech GmbH</strong><br />
+          Schaffhausen · Schweiz
+        </div>
+        <div>
+          Innenputz · Fassaden · Stuck · Restaurierung
+        </div>
+        <div>
+          © 2026 Putztech GmbH · Alle Rechte vorbehalten
+        </div>
+      </div>
     </footer>
+  </div>
 
-    <a href="#contact" class="floating-cta">Jetzt anfragen</a>
+  <script>
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    <script>
-        // Register ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
+    if (!prefersReduced) {
+      const items = document.querySelectorAll("[data-animate]");
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+      items.forEach((item, index) => {
+        gsap.set(item, { y: 18 });
+        gsap.to(item, {
+          y: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          delay: 0.12 + index * 0.06,
         });
+      });
 
-        // Hero animations - using fromTo for safety (content always ends visible)
-        gsap.fromTo('.hero-badge', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.2 });
-        gsap.fromTo('.hero h1', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, delay: 0.4 });
-        gsap.fromTo('.hero p', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.6 });
-        gsap.fromTo('.hero-buttons', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 0.8 });
-        gsap.fromTo('.hero-stats', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, delay: 1 });
-        gsap.fromTo('.stat', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, delay: 1.2 });
+      const heroImage = document.querySelector(".hero-image");
+      gsap.to(heroImage, {
+        y: -8,
+        duration: 6,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
 
-        // Scroll animations for sections - using fromTo
-        document.querySelectorAll('.fade-up').forEach(el => {
-            gsap.fromTo(el, 
-                { opacity: 0, y: 40 },
-                {
-                    scrollTrigger: {
-                        trigger: el,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none'
-                    },
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8
-                }
-            );
+      const cards = document.querySelectorAll(".service-card, .project-card, .process-card");
+      cards.forEach((card) => {
+        card.addEventListener("mousemove", (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - 0.5;
+          const y = (event.clientY - rect.top) / rect.height - 0.5;
+          gsap.to(card, { rotateX: -y * 4, rotateY: x * 4, duration: 0.6, ease: "power2.out" });
         });
-
-        // Service cards stagger - using fromTo
-        gsap.fromTo('.service-card', 
-            { opacity: 0, y: 50 },
-            {
-                scrollTrigger: {
-                    trigger: '.services-grid',
-                    start: 'top 80%'
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.2
-            }
-        );
-
-        // Parallax effect for hero background
-        const heroBg = document.querySelector('.hero-bg');
-        window.addEventListener('scroll', () => {
-            const offset = window.scrollY * 0.25;
-            if (heroBg) {
-                heroBg.style.transform = `translateY(${offset}px)`;
-            }
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power2.out" });
         });
-
-        // Stats counter animation (without GSAP TextPlugin)
-        const counters = document.querySelectorAll('.stat-number');
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                const el = entry.target;
-                const target = parseInt(el.dataset.target, 10);
-                const suffix = el.dataset.suffix || '';
-                const duration = 1600;
-                const start = performance.now();
-                const startVal = 0;
-
-                const tick = (now) => {
-                    const progress = Math.min((now - start) / duration, 1);
-                    const current = Math.floor(startVal + (target - startVal) * progress);
-                    el.textContent = `${current}${suffix}`;
-                    if (progress < 1) requestAnimationFrame(tick);
-                };
-
-                requestAnimationFrame(tick);
-                observer.unobserve(el);
-            });
-        }, { threshold: 0.6 });
-
-        counters.forEach(counter => counterObserver.observe(counter));
-
-        // Before/After slider
-        const comparison = document.querySelector('.comparison-visual');
-        const comparisonSlider = document.querySelector('.comparison-slider input');
-        if (comparison && comparisonSlider) {
-            const afterImage = comparison.querySelector('.after');
-            const updateComparison = (value) => {
-                const pct = 100 - value;
-                afterImage.style.clipPath = `inset(0 ${pct}% 0 0)`;
-            };
-            updateComparison(comparisonSlider.value);
-            comparisonSlider.addEventListener('input', (e) => updateComparison(e.target.value));
-        }
-
-        // Testimonials carousel
-        const testimonials = document.querySelectorAll('.testimonial');
-        const dots = document.querySelectorAll('.testimonial-dot');
-        let currentIndex = 0;
-        let carouselTimer;
-
-        const showTestimonial = (index) => {
-            testimonials.forEach((item, i) => {
-                item.classList.toggle('active', i === index);
-            });
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-            currentIndex = index;
-        };
-
-        const startCarousel = () => {
-            carouselTimer = setInterval(() => {
-                const nextIndex = (currentIndex + 1) % testimonials.length;
-                showTestimonial(nextIndex);
-            }, 5200);
-        };
-
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const index = parseInt(dot.dataset.index, 10);
-                showTestimonial(index);
-                clearInterval(carouselTimer);
-                startCarousel();
-            });
-        });
-
-        if (testimonials.length > 1) {
-            startCarousel();
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Form submit prevention (demo)
-        document.querySelector('.contact-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Vielen Dank für Ihre Anfrage! Wir melden uns innerhalb von 24 Stunden bei Ihnen.');
-        });
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            const toggle = document.querySelector('.menu-toggle');
-            const menu = document.getElementById('mobileMenu');
-            toggle.classList.toggle('active');
-            menu.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
-        }
-    </script>
+      });
+    }
+  </script>
 </body>
 </html>
